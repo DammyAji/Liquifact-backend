@@ -20,6 +20,7 @@ const { rpc } = require('@stellar/stellar-sdk');
 const { decodeEvent } = require('./decode');
 const { defaultStore } = require('./EventStore');
 const logger = require('../logger');
+const config = require('../config');
 
 /**
  * Build a Soroban RPC Server instance from config.
@@ -28,8 +29,7 @@ const logger = require('../logger');
  * @returns {rpc.Server}
  */
 function buildRpcServer() {
-  const url =
-    process.env.SOROBAN_RPC_URL || 'https://soroban-testnet.stellar.org';
+  const url = config.rpcUrl;
   return new rpc.Server(url, { allowHttp: url.startsWith('http://') });
 }
 
@@ -61,7 +61,7 @@ async function runOnce({
   const _contractId =
     contractId ??
     process.env.SOROBAN_CONTRACT_ID ??
-    process.env.ESCROW_CONTRACT_ID ??
+    config.contractId ??
     '';
 
   if (!_contractId) {
