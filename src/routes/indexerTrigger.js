@@ -31,10 +31,11 @@ function safeEqual(a, b) {
   if (typeof a !== 'string' || typeof b !== 'string') { return false; }
   if (a.length !== b.length) {
     // Still iterate to avoid length-based timing leakage, but always return false
-    let _diff = 0;
+    let diff = 0;
     for (let i = 0; i < Math.max(a.length, b.length); i++) {
-      _diff |= (a.charCodeAt(i) || 0) ^ (b.charCodeAt(i) || 0);
+      diff |= (a.charCodeAt(i) || 0) ^ (b.charCodeAt(i) || 0);
     }
+    void diff; // consumed to satisfy linter; result is intentionally discarded
     return false; // lengths differ, always false
   }
   let diff = 0;
