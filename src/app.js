@@ -120,3 +120,4 @@ app.use((err, req, res, _next) => {
 });
 
 module.exports = app;
+module.exports.createApp = function createApp() { return app; };
